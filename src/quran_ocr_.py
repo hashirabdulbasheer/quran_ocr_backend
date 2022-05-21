@@ -3,6 +3,7 @@ from flask import Flask, request, Response, jsonify
 import os
 import time
 import json
+from PIL import Image
 
 UPLOAD_FOLDER = './'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
@@ -32,6 +33,12 @@ def run_ocr():
 			filename = 'sample_' + str(millisec) + '.jpg'
 			file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 			out_image = 'out_' + str(millisec) + '.jpg'
+
+			# convert to grayscale
+			img = Image.open(filename)
+			imgGray = img.convert('L')
+			imgGray.save(filename)
+
 			# perform OCR
 			results = arabicocr.arabic_ocr(filename, out_image)
 			# format response
