@@ -44,6 +44,13 @@ def run_ocr():
 			os.remove(filename)
 			os.remove(out_image)
 			# return
-			return json.dumps(words)
-		return "Error"			
+			return app.response_class(response=json.dumps(words),
+                                  status=200,
+                                  mimetype='application/json')
+
+	error = {}
+	error["message"] = "Bad request"
+	return app.response_class(response=json.dumps(error),
+                              status=400,
+                              mimetype='application/json')			
 
