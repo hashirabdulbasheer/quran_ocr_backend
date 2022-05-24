@@ -44,7 +44,9 @@ def run_ocr():
 			# format response
 			words=[]
 			for i in range(len(results)):
-				word=results[i][1]
+				word = {}
+				word["score"] = results[i][2]
+				word["text"] = results[i][1]
 				if word:
 					words.append(word)
 			# cleanup					
